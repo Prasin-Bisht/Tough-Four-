@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - FleetFlow{% endblock %}
+
+{% block auth_content %}
+<div class="auth-container">
+    <div class="auth-box">
+        <div class="auth-header">
+            <h2><i class="bi bi-truck"></i> FleetFlow</h2>
+            <p>Fleet Management System</p>
+        </div>
+        
+        <form method="POST" class="auth-form">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" name="username" class="form-control" id="id_username" required>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <input type="password" name="password" class="form-control" id="id_password" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100 mb-3">
+                <i class="bi bi-box-arrow-in-right"></i> Login
+            </button>
+            
+            <div class="text-center">
+                <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    }
+    
+    .auth-container {
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+    }
+    
+    .auth-box {
+        background: white;
+        border-radius: 10px;
+        padding: 40px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .auth-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .auth-header h2 {
+        color: #1e3c72;
+        margin-bottom: 5px;
+    }
+    
+    .auth-header p {
+        color: #666;
+        margin: 0;
+    }
+    
+    .auth-form .input-group-text {
+        background: #f8f9fa;
+        border-color: #dee2e6;
+    }
+    
+    .auth-form .form-control:focus {
+        border-color: #1e3c72;
+        box-shadow: 0 0 0 0.2rem rgba(30, 60, 114, 0.25);
+    }
+    
+    .auth-form .btn-primary {
+        background: #1e3c72;
+        border-color: #1e3c72;
+        padding: 12px;
+        font-size: 16px;
+    }
+    
+    .auth-form .btn-primary:hover {
+        background: #2a5298;
+        border-color: #2a5298;
+    }
+    
+    .auth-form a {
+        color: #1e3c72;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    
+    .auth-form a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}

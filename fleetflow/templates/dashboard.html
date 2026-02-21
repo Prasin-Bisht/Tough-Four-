@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - FleetFlow{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card summary-card bg-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-subtitle mb-2">Active Vehicles</h6>
+                        <h2 class="card-title mb-0">{{ active_vehicles }}</h2>
+                        <small>of {{ total_vehicles }} total</small>
+                    </div>
+                    <div class="summary-icon">
+                        <i class="bi bi-car-front-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card summary-card bg-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-subtitle mb-2">Active Drivers</h6>
+                        <h2 class="card-title mb-0">{{ active_drivers }}</h2>
+                        <small>of {{ total_drivers }} total</small>
+                    </div>
+                    <div class="summary-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card summary-card bg-warning">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-subtitle mb-2">Maintenance Due</h6>
+                        <h2 class="card-title mb-0">{{ maintenance_due }}</h2>
+                        <small>within 7 days</small>
+                    </div>
+                    <div class="summary-icon">
+                        <i class="bi bi-tools"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Row -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon bg-info">
+                <i class="bi bi-signpost-2"></i>
+            </div>
+            <div class="stat-info">
+                <h4>{{ total_trips }}</h4>
+                <p>Total Trips</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon bg-success">
+                <i class="bi bi-check-circle"></i>
+            </div>
+            <div class="stat-info">
+                <h4>{{ completed_trips }}</h4>
+                <p>Completed Trips</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon bg-danger">
+                <i class="bi bi-fuel-pump"></i>
+            </div>
+            <div class="stat-info">
+                <h4>${{ total_fuel_cost|floatformat:2 }}</h4>
+                <p>Total Fuel Cost</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon bg-secondary">
+                <i class="bi bi-wrench"></i>
+            </div>
+            <div class="stat-info">
+                <h4>${{ total_maintenance_cost|floatformat:2 }}</h4>
+                <p>Maintenance Cost</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activities -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-clock-history"></i> Recent Trips</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_trips %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Vehicle</th>
+                                <th>Driver</th>
+                                <th>Route</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for trip in recent_trips %}
+                            <tr>
+                                <td>{{ trip.vehicle.vehicle_number }}</td>
+                                <td>{{ trip.driver.driver_name }}</td>
+                                <td>{{ trip.start_location }} → {{ trip.end_location }}</td>
+                                <td>
+                                    {% if trip.status == 'completed' %}
+                                    <span class="badge bg-success">{{ trip.get_status_display }}</span>
+                                    {% elif trip.status == 'in_progress' %}
+                                    <span class="badge bg-primary">{{ trip.get_status_display }}</span>
+                                    {% elif trip.status == 'pending' %}
+                                    <span class="badge bg-warning">{{ trip.get_status_display }}</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">{{ trip.get_status_display }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <a href="{% url 'trip_list' %}" class="btn btn-sm btn-outline-primary">View All Trips</a>
+                {% else %}
+                <p class="text-muted mb-0">No trips yet. <a href="{% url 'trip_add' %}">Create your first trip</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-fuel-pump"></i> Recent Fuel Logs</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_fuel_logs %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Vehicle</th>
+                                <th>Date</th>
+                                <th>Quantity</th>
+                                <th>Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for fuel in recent_fuel_logs %}
+                            <tr>
+                                <td>{{ fuel.vehicle.vehicle_number }}</td>
+                                <td>{{ fuel.date }}</td>
+                                <td>{{ fuel.fuel_quantity }} L</td>
+                                <td>${{ fuel.cost }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <a href="{% url 'fuel_list' %}" class="btn btn-sm btn-outline-primary">View All Fuel Logs</a>
+                {% else %}
+                <p class="text-muted mb-0">No fuel logs yet. <a href="{% url 'fuel_add' %}">Add your first fuel log</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-lightning"></i> Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <a href="{% url 'vehicle_add' %}" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-plus-circle d-block mb-2" style="font-size: 24px;"></i>
+                            Add Vehicle
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'driver_add' %}" class="btn btn-outline-success w-100">
+                            <i class="bi bi-person-plus d-block mb-2" style="font-size: 24px;"></i>
+                            Add Driver
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'trip_add' %}" class="btn btn-outline-info w-100">
+                            <i class="bi bi-signpost-2 d-block mb-2" style="font-size: 24px;"></i>
+                            Create Trip
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'fuel_add' %}" class="btn btn-outline-warning w-100">
+                            <i class="bi bi-fuel-pump d-block mb-2" style="font-size: 24px;"></i>
+                            Log Fuel
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'maintenance_add' %}" class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-tools d-block mb-2" style="font-size: 24px;"></i>
+                            Add Maintenance
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'reports' %}" class="btn btn-outline-dark w-100">
+                            <i class="bi bi-bar-chart-line d-block mb-2" style="font-size: 24px;"></i>
+                            View Reports
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

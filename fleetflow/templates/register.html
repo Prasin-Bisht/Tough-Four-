@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - FleetFlow{% endblock %}
+
+{% block auth_content %}
+<div class="auth-container">
+    <div class="auth-box">
+        <div class="auth-header">
+            <h2><i class="bi bi-truck"></i> FleetFlow</h2>
+            <p>Create Your Account</p>
+        </div>
+        
+        <form method="POST" class="auth-form">
+            {% csrf_token %}
+            
+            <!-- Username -->
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" name="username" class="form-control" id="id_username" required>
+                </div>
+                {% if form.username.errors %}
+                <div class="text-danger small">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <!-- First Name -->
+            <div class="mb-3">
+                <label for="id_first_name" class="form-label">First Name (Optional)</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                    <input type="text" name="first_name" class="form-control" id="id_first_name">
+                </div>
+            </div>
+            
+            <!-- Last Name -->
+            <div class="mb-3">
+                <label for="id_last_name" class="form-label">Last Name (Optional)</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                    <input type="text" name="last_name" class="form-control" id="id_last_name">
+                </div>
+            </div>
+            
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Email Address</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input type="email" name="email" class="form-control" id="id_email" required>
+                </div>
+                {% if form.email.errors %}
+                <div class="text-danger small">{{ form.email.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <!-- Password1 -->
+            <div class="mb-3">
+                <label for="id_password1" class="form-label">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <input type="password" name="password1" class="form-control" id="id_password1" required>
+                </div>
+                {% if form.password1.errors %}
+                <div class="text-danger small">{{ form.password1.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <!-- Password2 -->
+            <div class="mb-3">
+                <label for="id_password2" class="form-label">Confirm Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                    <input type="password" name="password2" class="form-control" id="id_password2" required>
+                </div>
+                {% if form.password2.errors %}
+                <div class="text-danger small">{{ form.password2.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100 mb-3">
+                <i class="bi bi-person-plus"></i> Register
+            </button>
+            
+            <div class="text-center">
+                <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        padding: 20px 0;
+    }
+    
+    .auth-container {
+        width: 100%;
+        max-width: 450px;
+    }
+    
+    .auth-box {
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .auth-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    
+    .auth-header h2 {
+        color: #1e3c72;
+        margin-bottom: 5px;
+    }
+    
+    .auth-header p {
+        color: #666;
+        margin: 0;
+    }
+    
+    .auth-form .input-group-text {
+        background: #f8f9fa;
+        border-color: #dee2e6;
+        color: #1e3c72;
+    }
+    
+    .auth-form .form-control:focus {
+        border-color: #1e3c72;
+        box-shadow: 0 0 0 0.2rem rgba(30, 60, 114, 0.25);
+    }
+    
+    .auth-form .btn-primary {
+        background: #1e3c72;
+        border-color: #1e3c72;
+        padding: 12px;
+        font-size: 16px;
+    }
+    
+    .auth-form .btn-primary:hover {
+        background: #2a5298;
+        border-color: #2a5298;
+    }
+    
+    .auth-form a {
+        color: #1e3c72;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    
+    .auth-form a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}

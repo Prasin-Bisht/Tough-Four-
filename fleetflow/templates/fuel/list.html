@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %}Fuel Logs - FleetFlow{% endblock %}
+{% block page_title %}Fuel Logs{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-fuel-pump"></i> Fuel Log List</h5>
+        <a href="{% url 'fuel_add' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Add Fuel Log
+        </a>
+    </div>
+    <div class="card-body">
+        <!-- Summary Cards -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-icon bg-info">
+                        <i class="bi bi-fuel-pump"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>{{ total_quantity|floatformat:2 }} L</h4>
+                        <p>Total Fuel Quantity</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-icon bg-danger">
+                        <i class="bi bi-currency-dollar"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>${{ total_cost|floatformat:2 }}</h4>
+                        <p>Total Fuel Cost</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-icon bg-warning">
+                        <i class="bi bi-receipt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>{{ fuel_logs.count }}</h4>
+                        <p>Total Entries</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if fuel_logs %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Vehicle</th>
+                        <th>Date</th>
+                        <th>Quantity (L)</th>
+                        <th>Cost</th>
+                        <th>Odometer</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fuel in fuel_logs %}
+                    <tr>
+                        <td><strong>{{ fuel.vehicle.vehicle_number }}</strong></td>
+                        <td>{{ fuel.date }}</td>
+                        <td>{{ fuel.fuel_quantity }}</td>
+                        <td>${{ fuel.cost }}</td>
+                        <td>{{ fuel.odometer_reading|default:"N/A" }} km</td>
+                        <td>
+                            <a href="{% url 'fuel_edit' fuel.pk %}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'fuel_delete' fuel.pk %}" class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-fuel-pump" style="font-size: 48px; color: #ccc;"></i>
+            <p class="mt-3 text-muted">No fuel logs found. Add your first fuel log to get started.</p>
+            <a href="{% url 'fuel_add' %}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Add Fuel Log
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

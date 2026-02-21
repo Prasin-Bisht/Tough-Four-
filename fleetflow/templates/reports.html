@@ -1,0 +1,354 @@
+{% extends 'base.html' %}
+{% block title %}Reports - FleetFlow{% endblock %}
+{% block page_title %}Reports & Analytics{% endblock %}
+
+{% block content %}
+<!-- Vehicle Statistics -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-car-front"></i> Vehicle Statistics</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-primary">
+                                <i class="bi bi-car-front"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ vehicle_stats.total }}</h4>
+                                <p>Total Vehicles</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-success">
+                                <i class="bi bi-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ vehicle_stats.active }}</h4>
+                                <p>Active</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-secondary">
+                                <i class="bi bi-pause-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ vehicle_stats.inactive }}</h4>
+                                <p>Inactive</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-warning">
+                                <i class="bi bi-tools"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ vehicle_stats.maintenance }}</h4>
+                                <p>Under Maintenance</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Driver Statistics -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-people"></i> Driver Statistics</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-info">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ driver_stats.total }}</h4>
+                                <p>Total Drivers</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-success">
+                                <i class="bi bi-person-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ driver_stats.available }}</h4>
+                                <p>Available</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-warning">
+                                <i class="bi bi-person-dash"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ driver_stats.assigned }}</h4>
+                                <p>Assigned</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Trip Statistics -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-signpost-2"></i> Trip Statistics</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-primary">
+                                <i class="bi bi-signpost-2"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ trip_stats.total }}</h4>
+                                <p>Total</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-warning">
+                                <i class="bi bi-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ trip_stats.pending }}</h4>
+                                <p>Pending</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-info">
+                                <i class="bi bi-play-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ trip_stats.in_progress }}</h4>
+                                <p>In Progress</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-success">
+                                <i class="bi bi-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ trip_stats.completed }}</h4>
+                                <p>Completed</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-danger">
+                                <i class="bi bi-x-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ trip_stats.cancelled }}</h4>
+                                <p>Cancelled</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-secondary">
+                                <i class="bi bi-signpost-split"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ trip_stats.total_distance|floatformat:0 }} km</h4>
+                                <p>Total Distance</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fuel & Maintenance Statistics -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-fuel-pump"></i> Fuel Statistics</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-info">
+                                <i class="bi bi-receipt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ fuel_stats.total_entries }}</h4>
+                                <p>Total Entries</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-danger">
+                                <i class="bi bi-currency-dollar"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>${{ fuel_stats.total_cost|floatformat:2 }}</h4>
+                                <p>Total Cost</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <p><strong>Total Fuel Quantity:</strong> {{ fuel_stats.total_quantity|floatformat:2 }} L</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-tools"></i> Maintenance Statistics</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-warning">
+                                <i class="bi bi-receipt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>{{ maintenance_stats.total_entries }}</h4>
+                                <p>Total Entries</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-secondary">
+                                <i class="bi bi-currency-dollar"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>${{ maintenance_stats.total_cost|floatformat:2 }}</h4>
+                                <p>Total Cost</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Vehicles -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-car-front"></i> Recent Vehicles</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_vehicles %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Vehicle Number</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for vehicle in recent_vehicles %}
+                            <tr>
+                                <td>{{ vehicle.vehicle_number }}</td>
+                                <td>{{ vehicle.get_vehicle_type_display }}</td>
+                                <td>
+                                    {% if vehicle.status == 'active' %}
+                                    <span class="badge bg-success">Active</span>
+                                    {% elif vehicle.status == 'inactive' %}
+                                    <span class="badge bg-secondary">Inactive</span>
+                                    {% else %}
+                                    <span class="badge bg-warning">Maintenance</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted mb-0">No vehicles yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-signpost-2"></i> Recent Trips</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_trips %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Vehicle</th>
+                                <th>Driver</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for trip in recent_trips %}
+                            <tr>
+                                <td>{{ trip.vehicle.vehicle_number }}</td>
+                                <td>{{ trip.driver.driver_name }}</td>
+                                <td>
+                                    {% if trip.status == 'completed' %}
+                                    <span class="badge bg-success">Completed</span>
+                                    {% elif trip.status == 'in_progress' %}
+                                    <span class="badge bg-primary">In Progress</span>
+                                    {% elif trip.status == 'pending' %}
+                                    <span class="badge bg-warning">Pending</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">Cancelled</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted mb-0">No trips yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

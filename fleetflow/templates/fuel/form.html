@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}{{ action }} Fuel Log - FleetFlow{% endblock %}
+{% block page_title %}{{ action }} Fuel Log{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-fuel-pump"></i> {{ action }} Fuel Log</h5>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="id_vehicle" class="form-label">Vehicle *</label>
+                        {{ form.vehicle }}
+                        {% if form.vehicle.errors %}
+                        <div class="text-danger small">{{ form.vehicle.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="id_date" class="form-label">Date *</label>
+                        {{ form.date }}
+                        {% if form.date.errors %}
+                        <div class="text-danger small">{{ form.date.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="id_fuel_quantity" class="form-label">Fuel Quantity (Liters) *</label>
+                        {{ form.fuel_quantity }}
+                        {% if form.fuel_quantity.errors %}
+                        <div class="text-danger small">{{ form.fuel_quantity.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="id_cost" class="form-label">Cost ($) *</label>
+                        {{ form.cost }}
+                        {% if form.cost.errors %}
+                        <div class="text-danger small">{{ form.cost.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="id_odometer_reading" class="form-label">Odometer Reading (km)</label>
+                {{ form.odometer_reading }}
+                {% if form.odometer_reading.errors %}
+                <div class="text-danger small">{{ form.odometer_reading.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'fuel_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to List
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> {{ action }} Fuel Log
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
